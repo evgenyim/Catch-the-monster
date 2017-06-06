@@ -6,26 +6,11 @@
     android:layout_height="match_parent"
     tools:context="com.example.user.catchthemonster.Level_1">
 
-    <TableLayout
-        android:layout_width="500dp"
-        android:layout_height="500dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </TableLayout>
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/Table5"
+        tools:layout_editor_absoluteY="151dp"
+        tools:layout_editor_absoluteX="55dp" />
 </android.support.constraint.ConstraintLayout>
