@@ -10,27 +10,52 @@ public class Bfs {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         int n = scan.nextInt();
-        int m = scan.nextInt();
         int monster_index = scan.nextInt();
         int character_index = scan.nextInt();
-        monster_index --;
-        character_index --;
         ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
         for (int i = 0; i < n; i ++) {
-            graph.add(new ArrayList<>());
+            for (int j = 0; j < n; j ++) {
+                graph.add(new ArrayList<>());
+            }
         }
-        for (int i = 0; i < m; i ++){
-            int from = scan.nextInt();
-            int to =  scan.nextInt();
-            from --;
-            to --;
-            graph.get(from).add(to);
-            graph.get(to).add(from);
+        for (int i = 0; i < n; i ++) {
+            for (int j = 0; j < n; j++) {
+                int base_vertex = number(i, j, n);
+                if (check(i - 1, j - 1, n)){
+                    graph.get(base_vertex).add(number(i - 1, j - 1, n));
+                }
+                if (check(i, j - 1, n)){
+                    graph.get(base_vertex).add(number(i, j - 1, n));
+                }
+                if (check(i + 1, j - 1, n)){
+                    graph.get(base_vertex).add(number(i + 1, j - 1, n));
+                }
+                if (check(i - 1, j, n)){
+                    graph.get(base_vertex).add(number(i - 1, j, n));
+                }
+                if (check(i + 1, j, n)){
+                    graph.get(base_vertex).add(number(i + 1, j, n));
+                }
+                if (check(i - 1, j + 1, n)){
+                    graph.get(base_vertex).add(number(i - 1, j + 1, n));
+                }
+                if (check(i, j + 1, n)){
+                    graph.get(base_vertex).add(number(i, j + 1, n));
+                }
+                if (check(i + 1, j + 1, n)){
+                    graph.get(base_vertex).add(number(i + 1, j + 1, n));
+                }
+//                int length = graph.get(number(i, j, n)).size();
+//                for (int t = 0; t < length; t ++){
+//                    System.out.print(graph.get(number(i, j, n)).get(t) + " ");
+//                }
+//                System.out.println();
+            }
         }
         Queue <Integer> q = new LinkedList<Integer>();
-        int[] parent = new int[n];
-        int[] distance = new int[n];
-        for (int i = 0; i < n; i ++){
+        int[] parent = new int[n * n];
+        int[] distance = new int[n * n];
+        for (int i = 0; i < n*n; i ++){
             distance[i] = 1000000000;
         }
         q.add(monster_index);
@@ -50,13 +75,22 @@ public class Bfs {
         int prev = character_index;
         ArrayList <Integer> way = new ArrayList<>();
         way.add(prev);
-        while (prev != 0){
+        while (prev != monster_index){
             prev = parent[prev];
             way.add(prev);
         }
-
         for (int i = way.size() - 1; i >= 0; i --){
-            System.out.print(way.get(i) + 1 + " ");
+            System.out.print(way.get(i) + " ");
         }
+    }
+    public static boolean check(int a, int b, int n){
+        if (a >= 0 & a < n & b >= 0 & b < n){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public static int number(int i, int j, int n){
+        return i * n + j;
     }
 }
