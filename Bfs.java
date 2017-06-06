@@ -45,11 +45,6 @@ public class Bfs {
                 if (check(i + 1, j + 1, n)){
                     graph.get(base_vertex).add(number(i + 1, j + 1, n));
                 }
-//                int length = graph.get(number(i, j, n)).size();
-//                for (int t = 0; t < length; t ++){
-//                    System.out.print(graph.get(number(i, j, n)).get(t) + " ");
-//                }
-//                System.out.println();
             }
         }
         Queue <Integer> q = new LinkedList<Integer>();
