@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class Help extends AppCompatActivity {
 
@@ -21,21 +22,27 @@ public class Help extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_level_1);
+        setContentView(R.layout.activity_help);
         final ArrayList<Integer> way = new ArrayList<>();
+       // final Button btn = (Button) findViewById(R.id.button);
+        final GameScreen gameScreen = (GameScreen) findViewById(R.id.game_screen);
         final Button btn = (Button) findViewById(R.id.button);
-        GameScreen gameScreen = (GameScreen) findViewById(R.id.game_screen);
-        gameScreen.invalidate();
-
         final View.OnClickListener listener1 = new View.OnClickListener() {
             @Override
-
             public void onClick(View v) {
-                bfs.bfs(5,0,7,way);
-
+                gameScreen.invalidate();
             }
         };
         btn.setOnClickListener(listener1);
+
+//        final View.OnClickListener listener1 = new View.OnClickListener() {
+//            @Override
+//
+//            public void onClick(View v) {
+//                bfs.bfs(5,0,7,way);
+//            }
+//        };
+//        btn.setOnClickListener(listener1);
     }
 
     float x;
