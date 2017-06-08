@@ -27,12 +27,16 @@ public class Help extends AppCompatActivity {
        // final Button btn = (Button) findViewById(R.id.button);
         final GameScreen gameScreen = (GameScreen) findViewById(R.id.game_screen);
         final Button btn = (Button) findViewById(R.id.button);
+        Monstrik mnstr = new Monstrik(100, 100);
+        gameScreen.addGameObject(mnstr);
         final View.OnClickListener listener1 = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gameScreen.invalidate();
             }
         };
+
+        mnstr.goRight();
         btn.setOnClickListener(listener1);
 
 //        final View.OnClickListener listener1 = new View.OnClickListener() {
@@ -44,19 +48,4 @@ public class Help extends AppCompatActivity {
 //        };
 //        btn.setOnClickListener(listener1);
     }
-
-    float x;
-    float y;
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {        x = event.getX();
-        y = event.getY();
-
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                Log.d("help", x+" "+y);
-        }
-        return super.onTouchEvent(event);
-    }
-
-
 }

@@ -19,6 +19,8 @@ import java.util.LinkedList;
 
 public class GameScreen extends FrameLayout {
 
+    private long lastUpdateTime = System.currentTimeMillis();
+
     LinkedList<GameObject> gameObjects = new LinkedList<>();
     public GameScreen(@NonNull Context context) {
         super(context);
@@ -31,24 +33,23 @@ public class GameScreen extends FrameLayout {
     public GameScreen(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
-
     @Override
     protected void onDraw(Canvas canvas) {
         Log.d("onDraw", "mi lubim java");
+        long now = System.currentTimeMillis();
+        long passedSinceLastUpdate = now - lastUpdateTime;
         Paint paint = new Paint();
         paint.setColor(Color.GREEN);
-
         for (GameObject gameObject : gameObjects) {
-            canvas.drawCircle(gameObject.x, gameObject.y, 50, paint);
+            gameObject.update(passedSinceLastUpdate);
+            canvas.drawCircle(gameObject.getX(), gameObject.getY(), 50, paint);
         }
-
         postInvalidateDelayed(50);
+        lastUpdateTime = System.currentTimeMillis();
     }
 
     public void addGameObject(final GameObject gameObject) {
         gameObjects.add(gameObject);
         postInvalidateDelayed(50);
     }
-
-
 }

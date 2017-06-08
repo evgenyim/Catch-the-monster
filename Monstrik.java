@@ -5,12 +5,37 @@ package com.example.user.catchthemonster;
  */
 
 public class Monstrik extends GameObject {
-    int x;
-    int y;
 
+    Direction movementDirection = Direction.NONE;
+
+    static final int MOVE_SPEED = 50;
 
     Monstrik(int x, int y){
         super(x, y);
+    }
+
+
+
+    @Override
+    public void update(long millisSinceLastUpdate) {
+        float seconds = (float) millisSinceLastUpdate / 1000;
+        switch (movementDirection) {
+            case LEFT:
+                break;
+            case TOP:
+                break;
+            case DOWN:
+                break;
+            case RIGHT:
+                this.x += seconds * MOVE_SPEED;
+                break;
+            case NONE:
+                break;
+        }
+    }
+
+    void goRight(){
+        movementDirection = Direction.RIGHT;
     }
 
 
