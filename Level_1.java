@@ -1,141 +1,85 @@
 package com.example.user.catchthemonster;
+import android.*;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
-import android.content.Intent;
+import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class Level_1 extends AppCompatActivity {
-    final  int right = 1;
-    final int left = 2;
-    final int down = 3;
-    final int up = 4;
-    final int right_down = 5;
-    final int left_down = 6;
-    final int right_up = 7;
-    final int left_up = 8;
-    public int direction(int a, int b){
-        if ((a/5 == b/5) && (a < b))
-        {
-            return right;
-        }
-        if ((a/5 == b/5) && (a > b))
-        {
-            return left;
-        }
-        if ((a%5 == b%5) && (a < b))
-        {
-            return down;
-        }
-        if ((a%5 == b%5) && (a > b))
-        {
-            return up;
-        }
-        if ((a/5 < b/5) && (a%5 < b % 5))
-        {
-            return right_down;
-        }
-        if ((a/5 < b/5) && (a%5 > b % 5))
-        {
-            return left_down;
-        }
-        if ((a/5 > b/5) && (a%5 > b % 5))
-        {
-            return left_up;
-        }
-        if ((a/5 > b/5) && (a%5 < b % 5))
-        {
-            return right_up;
-        }
-        return 0;
-    }
-    public void move(int[] b,ImageView monster,int k) {
-        int k1 = k;
-        switch (b[k]){
-            case 1:
-                monster.animate().xBy(155);
-                break;
-            case 2:
-                monster.animate().xBy(-155);
-                break;
-            case 3:
-                monster.animate().yBy(155);
-                break;
-            case 4:
-                monster.animate().yBy(-155);
-                break;
-            case 5:
-                monster.animate().xBy(155).yBy(155);
-                break;
-            case 6:
-                monster.animate().xBy(-155).yBy(155);
-                break;
-            case 7:
-                monster.animate().xBy(-155).yBy(-155);
-                break;
-            case 8:
-                monster.animate().xBy(155).yBy(-155);
-                break;
-        }
-    }
+    static int width1;
+    private GameScreen gameScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_1);
+
         final ArrayList<Integer> way = new ArrayList<>();
-        final ImageView monster =(ImageView) findViewById(R.id.imageView);
+        final GameScreen gameScreen = (GameScreen) findViewById(R.id.game_screen);
+        gameScreen.counter = 0;
+        gameScreen.addcoord(new Pair1(0,0));
         final Button btn = (Button) findViewById(R.id.button);
         final View.OnClickListener listener1 = new View.OnClickListener() {
             @Override
 
             public void onClick(View v) {
-                bfs.bfs(5,0,5,way);
-                int x = 0;
-                int b [] = new int[way.size()+1];
-                int k = 0;
+                bfs.bfs(5,0,24,way,6);
+                Log.d("bfs", String.valueOf(way.size()));
+                int p1 = 0;
                 for (int i = way.size() - 2; i >= 0; i --){
-                    int a = direction(x,way.get(i));
-                    switch (a){
-                        case 1:
-                            monster.animate().xBy(155);
-                            break;
-                        case 2:
-                            monster.animate().xBy(-155);
-                            break;
-                        case 3:
-                            monster.animate().yBy(155);
-                            break;
-                        case 4:
-                            monster.animate().yBy(-155);
-                            break;
-                        case 5:
-                            monster.animate().xBy(155).yBy(155);
-                            break;
-                        case 6:
-                            monster.animate().xBy(-155).yBy(155);
-                            break;
-                        case 7:
-                            monster.animate().xBy(-155).yBy(-155);
-                            break;
-                        case 8:
-                            monster.animate().xBy(155).yBy(-155);
-                            break;
+                    int p2 = way.get(i);
+                    int curent_x = gameScreen.coord.get(gameScreen.coord.size()-1).a;
+                    int curent_y = gameScreen.coord.get(gameScreen.coord.size()-1).b;
+
+                    Log.d("1", String.valueOf(MainMenu.width1));
+
+                    int delta = MainMenu.width1/5;
+
+
+
+                    if ((p1 / 5 == p2 / 5) && (p1 < p2)) {
+                        gameScreen.addcoord( new Pair1(curent_x+delta,curent_y));
                     }
-                    x = way.get(i);
-                    Log.d("lvl1", String.valueOf(way.get(i)));
+                    if ((p1 / 5 == p2 / 5) && (p1 > p2)) {
+                        gameScreen.addcoord( new Pair1(curent_x-delta,curent_y));
+
+                    }
+                    if ((p1 % 5 == p2 % 5) && (p1 < p2)) {
+                        gameScreen.addcoord( new Pair1(curent_x,curent_y+delta));
+
+                    }
+                    if ((p1 % 5 == p2 % 5) && (p1 > p2)) {
+                        gameScreen.addcoord( new Pair1(curent_x,curent_y-delta));
+
+                    }
+                    if ((p1 / 5 < p2 / 5) && (p1 % 5 < p2 % 5)) {
+                        gameScreen.addcoord( new Pair1(curent_x+delta,curent_y+delta));
+
+                    }
+                    if ((p1 / 5 < p2 / 5) && (p1 % 5 > p2 % 5)) {
+                        gameScreen.addcoord( new Pair1(curent_x-delta,curent_y+delta));
+
+                    }
+                    if ((p1 / 5 > p2 / 5) && (p1 % 5 > p2 % 5)) {
+                        gameScreen.addcoord( new Pair1(curent_x-delta,curent_y-delta));
+
+                    }
+                    if ((p1 / 5 > p2 / 5) && (p1 % 5 < p2 % 5)) {
+                        gameScreen.addcoord( new Pair1(curent_x+delta,curent_y-delta));
+
+                    }
+                    p1 = p2;
                 }
-
-
+                btn.setOnClickListener(null);
             }
         };
         btn.setOnClickListener(listener1);
@@ -153,6 +97,4 @@ public class Level_1 extends AppCompatActivity {
         }
         return super.onTouchEvent(event);
     }
-
-
 }
