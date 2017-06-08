@@ -1,21 +1,18 @@
-/**
+package com.example.user.catchthemonster; /**
  * Created by User on 05.06.2017.
  */
-import com.sun.org.apache.xpath.internal.SourceTree;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+import android.util.Log;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
-public class Bfs {
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        int n = scan.nextInt();
-        int monster_index = scan.nextInt();
-        int character_index = scan.nextInt();
+public class bfs {
+    public static void bfs(int n, int monster_index,int character_index,ArrayList<Integer> way) {
         ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
         for (int i = 0; i < n; i ++) {
             for (int j = 0; j < n; j ++) {
-                graph.add(new ArrayList<>());
+                graph.add(new ArrayList<Integer>());
             }
         }
         for (int i = 0; i < n; i ++) {
@@ -66,16 +63,15 @@ public class Bfs {
                 }
             }
         }
-        System.out.println(distance[character_index]);
+
         int prev = character_index;
-        ArrayList <Integer> way = new ArrayList<>();
         way.add(prev);
         while (prev != monster_index){
             prev = parent[prev];
             way.add(prev);
         }
         for (int i = way.size() - 1; i >= 0; i --){
-            System.out.print(way.get(i) + " ");
+
         }
     }
     public static boolean check(int a, int b, int n){
