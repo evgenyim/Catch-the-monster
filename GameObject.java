@@ -1,13 +1,14 @@
+
 package com.example.user.catchthemonster;
 
 /**
  * Created by User on 08.06.2017.
  */
 
-public class GameObject {
+public abstract class GameObject {
 
-    int x;
-    int y;
+    protected int x;
+    protected int y;
 
 
     GameObject(int x, int y) {
@@ -30,4 +31,7 @@ public class GameObject {
     public int getY() {
         return y;
     }
+
+    public abstract void update(final long millisSinceLastUpdate);
+
 }
