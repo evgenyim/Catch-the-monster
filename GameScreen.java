@@ -1,4 +1,3 @@
-
 package com.example.user.catchthemonster;
 
 import android.content.Context;
@@ -49,16 +48,21 @@ public class GameScreen extends FrameLayout {
         paint.setColor(Color.RED);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.monster);
         Bitmap bm = Bitmap.createScaledBitmap(bitmap,MainMenu.width1/5, MainMenu.width1/5, false);
-        canvas.drawBitmap(bm,coord.get(counter).a, coord.get(counter).b,null);
+        Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(),R.drawable.table5);
+        Bitmap bm1 = Bitmap.createScaledBitmap(bitmap1,MainMenu.width1, MainMenu.width1, false);
+        canvas.drawBitmap(bm1,0, 0,null);
+//        canvas.drawCircle((MainMenu.width1)/5*4+(MainMenu.width1/10),((MainMenu.width1)/5*3+(MainMenu.width1)/10),MainMenu.width1/10,paint);
+        int index = Math.min(counter, coord.size() - 1);
+        canvas.drawBitmap(bm,coord.get(index).a, coord.get(index).b,null);
+
         counter ++;
         if (counter < coord.size()){
-            postInvalidateDelayed(1000);
+            postInvalidateDelayed(800);
         }
     }
     public void addcoord(final Pair1 p) {
         coord.add(p);
         postInvalidateDelayed(50);
     }
-
 
 }
