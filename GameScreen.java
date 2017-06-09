@@ -46,14 +46,36 @@ public class GameScreen extends FrameLayout {
         Log.d("onDraw", "mi lubim java");
         Paint paint = new Paint();
         paint.setColor(Color.RED);
+
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.monster);
-        Bitmap bm = Bitmap.createScaledBitmap(bitmap,MainMenu.width1/5, MainMenu.width1/5, false);
         Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(),R.drawable.table5);
-        Bitmap bm1 = Bitmap.createScaledBitmap(bitmap1,MainMenu.width1, MainMenu.width1, false);
-        canvas.drawBitmap(bm1,0, 0,null);
-//        canvas.drawCircle((MainMenu.width1)/5*4+(MainMenu.width1/10),((MainMenu.width1)/5*3+(MainMenu.width1)/10),MainMenu.width1/10,paint);
+        Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(),R.drawable.start_button_background);
+        Bitmap bitmap4 = BitmapFactory.decodeResource(getResources(),R.drawable.character);
+        Bitmap bitmap5 = BitmapFactory.decodeResource(getResources(),R.drawable.stone);
+
+        Bitmap monster = Bitmap.createScaledBitmap(bitmap,MainMenu.width1/5, MainMenu.width1/5, false);
+        Bitmap field = Bitmap.createScaledBitmap(bitmap1,MainMenu.width1, MainMenu.width1, false);
+        Bitmap pit = Bitmap.createScaledBitmap(bitmap2,MainMenu.width1/5, MainMenu.width1/5, false);
+        Bitmap character = Bitmap.createScaledBitmap(bitmap4,MainMenu.width1/5, MainMenu.width1/5, false);
+        Bitmap stone = Bitmap.createScaledBitmap(bitmap5, MainMenu.width1/5, MainMenu.width1/5, false);
+
+        canvas.drawBitmap(field,0, MainMenu.width1/5,null);
+        canvas.drawBitmap(pit,Square.Square_x(Level_1.pit_square1),Square.Square_y(Level_1.pit_square1),null);
+        canvas.drawBitmap(character,Square.Square_x(Level_1.character_square1),Square.Square_y(Level_1.character_square1),null);
         int index = Math.min(counter, coord.size() - 1);
-        canvas.drawBitmap(bm,coord.get(index).a, coord.get(index).b,null);
+        canvas.drawBitmap(monster,coord.get(index).a, coord.get(index).b,null);
+        for(int i = 0;i<Level_1.forobst1.length;i++) {
+            canvas.drawBitmap(stone,Square.Square_x(Level_1.forobst1[i]),Square.Square_y(Level_1.forobst1[i]),null);
+        }
+
+        if (coord.get(index).a == Square.Square_x(Level_1.pit_square1) && coord.get(index).b==Square.Square_y(Level_1.pit_square1)) {
+            counter = coord.size();
+            Bitmap bitmap3 = BitmapFactory.decodeResource(getResources(),R.drawable.youwin);
+            Bitmap youwin = Bitmap.createScaledBitmap(bitmap3,MainMenu.width1/5*4, MainMenu.width1/5*3, false);
+            canvas.drawBitmap(youwin,MainMenu.width1/7,MainMenu.height1/4,null);
+        }
+
+
 
         counter ++;
         if (counter < coord.size()){
