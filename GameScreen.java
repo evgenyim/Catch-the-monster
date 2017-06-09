@@ -1,3 +1,4 @@
+
 package com.example.user.catchthemonster;
 
 import android.content.Context;
@@ -58,5 +59,6 @@ public class GameScreen extends FrameLayout {
         coord.add(p);
         postInvalidateDelayed(50);
     }
+
 
 }

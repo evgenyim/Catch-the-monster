@@ -8,8 +8,10 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class bfs {
+
     public static void bfs(int n, int monster_index,int character_index,ArrayList<Integer> way, int pit_square_number) {
-        ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+
+         ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
         for (int i = 0; i < n; i ++) {
             for (int j = 0; j < n; j ++) {
                 graph.add(new ArrayList<Integer>());
@@ -63,15 +65,16 @@ public class bfs {
                 }
             }
         }
+
         int without_pit_distance = distance1[character_index];
         int prev = character_index;
         ArrayList <Integer> way1 = new ArrayList<>();
         way1.add(prev);
+
         while (prev != monster_index){
             prev = parent1[prev];
             way1.add(prev);
         }
-
 
         Queue <Integer> q2 = new LinkedList<Integer>();
         int[] parent2 = new int[n * n];
@@ -110,6 +113,7 @@ public class bfs {
             for(int i = 0;i<way2.size();i++){
                 way.add(way2.get(i));
             }
+
         }
     }
     public static boolean check(int a, int b, int n){

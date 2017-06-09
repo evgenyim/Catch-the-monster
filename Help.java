@@ -1,3 +1,4 @@
+
 package com.example.user.catchthemonster;
 import android.*;
 
@@ -108,3 +109,4 @@ public class Help extends AppCompatActivity {
         return super.onTouchEvent(event);
     }
 }
+
