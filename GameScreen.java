@@ -48,7 +48,7 @@ public class GameScreen extends FrameLayout {
         Paint paint = new Paint();
         paint.setColor(Color.RED);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.monster);
-        Bitmap bm = Bitmap.createScaledBitmap(bitmap,Help.width1/5, Help.width1/5, false);
+        Bitmap bm = Bitmap.createScaledBitmap(bitmap,MainMenu.width1/5, MainMenu.width1/5, false);
         canvas.drawBitmap(bm,coord.get(counter).a, coord.get(counter).b,null);
         counter ++;
         if (counter < coord.size()){
