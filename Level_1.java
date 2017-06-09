@@ -36,7 +36,12 @@ public class Level_1 extends AppCompatActivity {
                 int moster_square = 0;
                 int character_square = 24;
                 int pit_square = 6;
-                bfs.bfs(field_side,moster_square,character_square,way,pit_square);
+                int[] forobst = {};
+                ArrayList <Integer> obstacle = new ArrayList<>();
+                for (int i = 0; i < forobst.length; i ++){
+                    obstacle.add(forobst[i]);
+                }
+                bfs.bfs(field_side,moster_square,character_square,way,pit_square, obstacle);
                 Log.d("bfs", String.valueOf(way.size()));
                 int p1 = 0;
                 for (int i = way.size() - 2; i >= 0; i --){
