@@ -32,7 +32,11 @@ public class Level_1 extends AppCompatActivity {
             @Override
 
             public void onClick(View v) {
-                bfs.bfs(5,0,24,way,6);
+                int field_side = 5;
+                int moster_square = 0;
+                int character_square = 24;
+                int pit_square = 6;
+                bfs.bfs(field_side,moster_square,character_square,way,pit_square);
                 Log.d("bfs", String.valueOf(way.size()));
                 int p1 = 0;
                 for (int i = way.size() - 2; i >= 0; i --){
