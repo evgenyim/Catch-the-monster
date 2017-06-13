@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 public class GameScreen extends FrameLayout {
     static int counter;
+    static boolean loose;
 
     ArrayList <Pair1> coord = new ArrayList<>();
 
@@ -69,7 +70,7 @@ public class GameScreen extends FrameLayout {
 
         canvas.drawBitmap(field,0, MainMenu.width1/5,null);
         canvas.drawBitmap(pit,Square.Square_x(Level_1.pit_square1),Square.Square_y(Level_1.pit_square1),null);
-        canvas.drawBitmap(character,Square.Square_x(Level_1.character_square1),Square.Square_y(Level_1.character_square1),null);
+
         int index = Math.min(counter, coord.size() - 1);
         canvas.drawBitmap(monster,coord.get(index).a, coord.get(index).b,null);
         for(int i = 0;i<Level_1.forobst1.length;i++) {
@@ -86,8 +87,10 @@ public class GameScreen extends FrameLayout {
         }
         if (coord.get(index).a == Square.Square_x(Level_1.character_square1) && coord.get(index).b==Square.Square_y(Level_1.character_square1)) {
             canvas.drawBitmap(new_monster,Square.Square_x(Level_1.character_square1), Square.Square_y(Level_1.character_square1), null);
+            loose = true;
         }
-
+        if  (! loose)
+            canvas.drawBitmap(character,Square.Square_x(Level_1.character_square1),Square.Square_y(Level_1.character_square1),null);
 
         counter ++;
         if (counter < coord.size()){

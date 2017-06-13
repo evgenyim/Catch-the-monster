@@ -41,6 +41,7 @@ public class Level_1 extends AppCompatActivity {
         final ArrayList<Integer> way = new ArrayList<>();
         final GameScreen gameScreen = (GameScreen) findViewById(R.id.game_screen);
         gameScreen.counter = 0;
+        gameScreen.loose = false;
         final int moster_square = 0;
         final int pit_square = 12;
         final int character_square = 24;
