@@ -1,9 +1,13 @@
 package com.example.user.catchthemonster;
 import android.*;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -17,6 +21,7 @@ import android.widget.Button;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 public class Level_1 extends AppCompatActivity {
@@ -25,17 +30,26 @@ public class Level_1 extends AppCompatActivity {
     static int pit_square1;
     static ArrayList<Integer> obstacle = new ArrayList<>();
     static int character_square1;
-    static int[] forobst1 = {6, 11, 16, 22, 18, 13, 8, 22, 23};
+    static int[] forobst1 = {1};
     static boolean clicked = false;
     static ArrayList<Integer> user_obstacle = new ArrayList<>();
     static int obstacle_amount1;
     static boolean started1;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_1);
+        final Editor ed = MainMenu.sPref.edit();
+        if (! MainMenu.sPref.contains("Level_1")) {
+            ed.putBoolean("Level_1", false);
+            ed.commit();
+        }
+        Log.d("12",String.valueOf(MainMenu.sPref.getBoolean("Level_1",true)));
+
+
 
         final boolean started = false;
         final ArrayList<Integer> way = new ArrayList<>();
@@ -43,7 +57,7 @@ public class Level_1 extends AppCompatActivity {
         gameScreen.counter = 0;
         gameScreen.loose = false;
         final int moster_square = 0;
-        final int pit_square = 12;
+        final int pit_square = 16;
         final int character_square = 24;
         character_square1 = character_square;
         pit_square1 = pit_square;
@@ -140,16 +154,28 @@ public class Level_1 extends AppCompatActivity {
         final Bitmap no_obstacle = Bitmap.createScaledBitmap(bitmap3,MainMenu.width1/5, MainMenu.width1/5, false);
         final Drawable no_obstacle_1 = new BitmapDrawable(getResources(), no_obstacle);
 
-
+        final int[] obstacles = {2};
+        final String[] o = {String.valueOf(obstacles[0])};
 
         final Button btn1 = (Button) findViewById(R.id.btn);
         btn1.setBackground(obstacle_start_1);
+        btn1.setTextColor(Color.WHITE);
+        btn1.setTextSize(MainMenu.width1/40);
+        btn1.setText(o[0]);
+
+
 
         final View.OnClickListener listener3 = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btn1.setBackground(obstacle_1);
-                clicked = true;
+                if (!clicked){
+                    btn1.setBackground(obstacle_1);
+                    clicked = true;
+                    obstacles[0]--;
+                    o[0] = String.valueOf(obstacles[0]);
+                    btn1.setText(o[0]);
+                }
+
             }
         };
         btn1.setOnClickListener(listener3);
@@ -158,7 +184,7 @@ public class Level_1 extends AppCompatActivity {
         Log.d("hui", String.valueOf(started1));
         final float[] x = new float[1];
         final float[] y = new float[1];
-        final int[] obstacle_amount = {2};
+        final int[] obstacle_amount = {obstacles[0]};
         obstacle_amount1 = obstacle_amount[0];
         final boolean[] out_of_obst = {false};
         final View.OnTouchListener list = new View.OnTouchListener() {
@@ -195,7 +221,3 @@ public class Level_1 extends AppCompatActivity {
         gameScreen.setOnTouchListener(list);
     }
 }
-
-
-
-
