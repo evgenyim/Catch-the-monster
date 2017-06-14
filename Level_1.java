@@ -58,6 +58,7 @@ public class Level_1 extends AppCompatActivity {
         gameScreen.loose = false;
         final int moster_square = 0;
         final int pit_square = 16;
+
         final int character_square = 24;
         character_square1 = character_square;
         pit_square1 = pit_square;
@@ -168,6 +169,7 @@ public class Level_1 extends AppCompatActivity {
         final View.OnClickListener listener3 = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (!clicked){
                     btn1.setBackground(obstacle_1);
                     clicked = true;
@@ -175,6 +177,7 @@ public class Level_1 extends AppCompatActivity {
                     o[0] = String.valueOf(obstacles[0]);
                     btn1.setText(o[0]);
                 }
+
 
             }
         };
