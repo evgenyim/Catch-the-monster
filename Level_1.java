@@ -1,7 +1,10 @@
 package com.example.user.catchthemonster;
 import android.*;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -18,6 +21,7 @@ import android.widget.Button;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 public class Level_1 extends AppCompatActivity {
@@ -33,10 +37,19 @@ public class Level_1 extends AppCompatActivity {
     static boolean started1;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_1);
+        final Editor ed = MainMenu.sPref.edit();
+        if (! MainMenu.sPref.contains("Level_1")) {
+            ed.putBoolean("Level_1", false);
+            ed.commit();
+        }
+        Log.d("12",String.valueOf(MainMenu.sPref.getBoolean("Level_1",true)));
+
+
 
         final boolean started = false;
         final ArrayList<Integer> way = new ArrayList<>();
@@ -44,7 +57,8 @@ public class Level_1 extends AppCompatActivity {
         gameScreen.counter = 0;
         gameScreen.loose = false;
         final int moster_square = 0;
-        final int pit_square = 7;
+        final int pit_square = 16;
+
         final int character_square = 24;
         character_square1 = character_square;
         pit_square1 = pit_square;
@@ -155,11 +169,16 @@ public class Level_1 extends AppCompatActivity {
         final View.OnClickListener listener3 = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btn1.setBackground(obstacle_1);
-                clicked = true;
-                obstacles[0]--;
-                o[0] = String.valueOf(obstacles[0]);
-                btn1.setText(o[0]);
+
+                if (!clicked){
+                    btn1.setBackground(obstacle_1);
+                    clicked = true;
+                    obstacles[0]--;
+                    o[0] = String.valueOf(obstacles[0]);
+                    btn1.setText(o[0]);
+                }
+
+
             }
         };
         btn1.setOnClickListener(listener3);
