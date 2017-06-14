@@ -1,13 +1,16 @@
 package com.example.user.catchthemonster;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.content.SharedPreferences;
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,12 +20,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class levels extends AppCompatActivity {
-    GridView gridView;
-    ArrayAdapter<String> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_levels);
+
 
         int space_y = MainMenu.height1 - 6 * MainMenu.width1/5;
 
@@ -107,6 +109,23 @@ public class levels extends AppCompatActivity {
             }
         };
         btn1.setOnClickListener(listener1);
+        Log.d("3", String.valueOf(MainMenu.sPref.getBoolean("Level_1",true)));
+
+        final Button btn2 =(Button) findViewById(R.id.button2);
+        final View.OnClickListener listener2 = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (MainMenu.sPref.getBoolean("Level_1", false)) {
+                    Log.d("2", "proshel");
+                    Intent intent = new Intent(this_, Level_2.class);
+                    startActivity(intent);
+                }
+
+            }
+        };
+        btn2.setOnClickListener(listener2);
+
+
 
     }
     private void adjustGridView() {
