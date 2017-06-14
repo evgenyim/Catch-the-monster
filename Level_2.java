@@ -1,7 +1,10 @@
 package com.example.user.catchthemonster;
 import android.*;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -15,9 +18,12 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 public class Level_2 extends AppCompatActivity {
@@ -25,32 +31,44 @@ public class Level_2 extends AppCompatActivity {
     static int pit_square1;
     static ArrayList<Integer> obstacle = new ArrayList<>();
     static int character_square1;
-    static int[] forobst1 = {};
+    static int[] forobst1 = {11,16};
     static boolean clicked = false;
     static ArrayList<Integer> user_obstacle = new ArrayList<>();
     static int obstacle_amount1;
     static boolean started1;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_2);
+        final Editor ed = MainMenu.sPref.edit();
+        if (! MainMenu.sPref.contains("Level_2")) {
+            ed.putBoolean("Level_2", false);
+            ed.commit();
+        }
+        Log.d("12",String.valueOf(MainMenu.sPref.getBoolean("Level_2",true)));
+
+
+
         final boolean started = false;
         final ArrayList<Integer> way = new ArrayList<>();
-        final GameScreen_2 gameScreen2 = (GameScreen_2) findViewById(R.id.game_screen_2);
-        gameScreen2.counter = 0;
-        gameScreen2.loose = false;
+        final GameScreen_2 gameScreen = (GameScreen_2) findViewById(R.id.game_screen_2);
+        gameScreen.counter = 0;
+        gameScreen.loose = false;
+
         final int moster_square = 6;
-        final int pit_square = 23;
+        final int pit_square = 9;
         final int character_square = 19;
+
         character_square1 = character_square;
         pit_square1 = pit_square;
         obstacle = new ArrayList<>();
         user_obstacle = new ArrayList<>();
         started1 = started;
 
-        gameScreen2.addcoord(new Pair1(Square.Square_x(moster_square), Square.Square_y(moster_square)));
+        gameScreen.addcoord(new Pair1(Square.Square_x(moster_square), Square.Square_y(moster_square)));
         final Level_2 this_ = this;
         final Button btn2 = (Button) findViewById(R.id.btn2);
         btn2.setBackgroundResource(R.drawable.start_button_background);
@@ -63,55 +81,75 @@ public class Level_2 extends AppCompatActivity {
         btn2.setOnClickListener(listener5);
 
         final Button btn = (Button) findViewById(R.id.button);
+        int space_y = MainMenu.height1 - 6 * MainMenu.width1/5;
+
+        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) btn.getLayoutParams();
+        lp.height = MainMenu.width1/5;
+        lp.width = MainMenu.width1/5;
+        btn.setLayoutParams(lp);
+        btn.setY(MainMenu.width1*6/5 + space_y/4);
+        btn.setX((MainMenu.width1/5)*3 + MainMenu.width1/10);
+        btn.setText("START");
+        btn.setBackgroundResource(R.drawable.start_button_background);
+
+
+        btn2.setLayoutParams(lp);
+        btn2.setY(MainMenu.width1*6/5 + space_y/4);
+        btn2.setX((MainMenu.width1/5)*0 + MainMenu.width1/10);
+        int[] forobst = forobst1;
+        for (int i = 0; i < forobst.length; i++) {
+            obstacle.add(forobst[i]);
+        }
+
+
+
         final View.OnClickListener listener1 = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 started1 = true;
                 int field_side = 5;
-                int[] forobst = forobst1;
-                for (int i = 0; i < forobst.length; i++) {
-                    obstacle.add(forobst[i]);
-                }
+
+
                 bfs.bfs(field_side, moster_square, character_square, way, pit_square, obstacle);
                 Log.d("bfs", String.valueOf(way.size()));
                 int p1 = way.get(way.size() - 1);
                 for (int i = way.size() - 2; i >= 0; i--) {
                     Log.d("bfs", String.valueOf(way.get(i)));
                     int p2 = way.get(i);
-                    int curent_x = gameScreen2.coord.get(gameScreen2.coord.size() - 1).a;
-                    int curent_y = gameScreen2.coord.get(gameScreen2.coord.size() - 1).b;
+                    int curent_x = gameScreen.coord.get(gameScreen.coord.size() - 1).a;
+                    int curent_y = gameScreen.coord.get(gameScreen.coord.size() - 1).b;
 
                     int delta = MainMenu.width1 / 5;
 
                     if ((p1 / 5 == p2 / 5) && (p1 < p2)) {
-                        gameScreen2.addcoord(new Pair1(curent_x + delta, curent_y));
+                        gameScreen.addcoord(new Pair1(curent_x + delta, curent_y));
                     }
                     if ((p1 / 5 == p2 / 5) && (p1 > p2)) {
-                        gameScreen2.addcoord(new Pair1(curent_x - delta, curent_y));
+                        gameScreen.addcoord(new Pair1(curent_x - delta, curent_y));
 
                     }
                     if ((p1 % 5 == p2 % 5) && (p1 < p2)) {
-                        gameScreen2.addcoord(new Pair1(curent_x, curent_y + delta));
+                        gameScreen.addcoord(new Pair1(curent_x, curent_y + delta));
 
                     }
                     if ((p1 % 5 == p2 % 5) && (p1 > p2)) {
-                        gameScreen2.addcoord(new Pair1(curent_x, curent_y - delta));
+                        gameScreen.addcoord(new Pair1(curent_x, curent_y - delta));
 
                     }
                     if ((p1 / 5 < p2 / 5) && (p1 % 5 < p2 % 5)) {
-                        gameScreen2.addcoord(new Pair1(curent_x + delta, curent_y + delta));
+                        gameScreen.addcoord(new Pair1(curent_x + delta, curent_y + delta));
 
                     }
                     if ((p1 / 5 < p2 / 5) && (p1 % 5 > p2 % 5)) {
-                        gameScreen2.addcoord(new Pair1(curent_x - delta, curent_y + delta));
+                        gameScreen.addcoord(new Pair1(curent_x - delta, curent_y + delta));
 
                     }
                     if ((p1 / 5 > p2 / 5) && (p1 % 5 > p2 % 5)) {
-                        gameScreen2.addcoord(new Pair1(curent_x - delta, curent_y - delta));
+                        gameScreen.addcoord(new Pair1(curent_x - delta, curent_y - delta));
 
                     }
                     if ((p1 / 5 > p2 / 5) && (p1 % 5 < p2 % 5)) {
-                        gameScreen2.addcoord(new Pair1(curent_x + delta, curent_y - delta));
+                        gameScreen.addcoord(new Pair1(curent_x + delta, curent_y - delta));
 
                     }
                     p1 = p2;
@@ -134,8 +172,8 @@ public class Level_2 extends AppCompatActivity {
         final Bitmap obstacle1 = Bitmap.createScaledBitmap(bitmap2,MainMenu.width1/5, MainMenu.width1/5, false);
         final Drawable obstacle_1 = new BitmapDrawable(getResources(), obstacle1);
 
-        final Bitmap bitmap3 = BitmapFactory.decodeResource(getResources(),R.drawable.no_obstacle);
 
+        final Bitmap bitmap3 = BitmapFactory.decodeResource(getResources(),R.drawable.no_obstacle);
         final Bitmap no_obstacle = Bitmap.createScaledBitmap(bitmap3,MainMenu.width1/5, MainMenu.width1/5, false);
         final Drawable no_obstacle_1 = new BitmapDrawable(getResources(), no_obstacle);
 
@@ -143,6 +181,13 @@ public class Level_2 extends AppCompatActivity {
         final String[] o = {String.valueOf(obstacles[0])};
 
         final Button btn1 = (Button) findViewById(R.id.btn);
+
+        btn1.setLayoutParams(lp);
+        btn1.setY(MainMenu.width1*6/5 + space_y/4);
+        btn1.setX((MainMenu.width1/5)*2);
+        btn1.setTextColor(Color.WHITE);
+        btn1.setTextSize(MainMenu.width1/40);
+        btn1.setText(o[0]);
         btn1.setBackground(obstacle_start_1);
         btn1.setTextColor(Color.WHITE);
         btn1.setTextSize(MainMenu.width1/40);
@@ -150,20 +195,34 @@ public class Level_2 extends AppCompatActivity {
 
 
 
+        final ImageView level = (ImageView) findViewById(R.id.imageView);
+
+        final Bitmap bitmap4 = BitmapFactory.decodeResource(getResources(),R.drawable.level1);
+        final Bitmap level_1 = Bitmap.createScaledBitmap(bitmap4,MainMenu.width1, MainMenu.width1/5, false);
+        final Drawable level1 = new BitmapDrawable(getResources(), level_1);
+        level.setBackground(level1);
+
+
+
         final View.OnClickListener listener3 = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!clicked){
-                    btn1.setBackground(obstacle_1);
-                    clicked = true;
+
+                btn1.setBackground(obstacle_1);
+                if(!clicked) {
                     obstacles[0]--;
                     o[0] = String.valueOf(obstacles[0]);
                     btn1.setText(o[0]);
                 }
+                clicked = true;
+
+
             }
         };
         btn1.setOnClickListener(listener3);
 
+
+        Log.d("hui", String.valueOf(started1));
         final float[] x = new float[1];
         final float[] y = new float[1];
         final int[] obstacle_amount = {obstacles[0]};
@@ -179,13 +238,13 @@ public class Level_2 extends AppCompatActivity {
 
                         switch (event.getAction()) {
                             case MotionEvent.ACTION_DOWN:
-                                if (NumberByCoord.NumberByCoord(x[0], y[0]) >= -1 && NumberByCoord.NumberByCoord(x[0], y[0]) < 25) {
+                                if (NumberByCoord.NumberByCoord(x[0], y[0]) >= -1 && NumberByCoord.NumberByCoord(x[0], y[0]) < 25  && NumberByCoord.NumberByCoord(x[0], y[0])!= pit_square && NumberByCoord.NumberByCoord(x[0], y[0])!= character_square && NumberByCoord.NumberByCoord(x[0], y[0])!=moster_square && !obstacle.contains(NumberByCoord.NumberByCoord(x[0], y[0]))) {
                                     btn1.setBackground(obstacle_1);
                                     obstacle.add(NumberByCoord.NumberByCoord(x[0], y[0]));
                                     user_obstacle.add(NumberByCoord.NumberByCoord(x[0], y[0]));
                                     clicked = false;
                                     obstacle_amount[0]--;
-                                    gameScreen2.draw2();
+                                    gameScreen.draw();
                                     btn1.setBackground(obstacle_start_1);
                                     if (obstacle_amount[0] <= 0) {
                                         btn1.setBackground(no_obstacle_1);
@@ -200,6 +259,6 @@ public class Level_2 extends AppCompatActivity {
                 return false;
             }
         };
-        gameScreen2.setOnTouchListener(list);
+        gameScreen.setOnTouchListener(list);
     }
 }
