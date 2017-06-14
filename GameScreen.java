@@ -1,6 +1,8 @@
 package com.example.user.catchthemonster;
 
 import android.content.Context;
+import android.content.SharedPreferences.Editor;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -17,6 +19,9 @@ import android.view.Display;
 import android.widget.FrameLayout;
 
 import java.util.ArrayList;
+
+import static android.content.Context.MODE_PRIVATE;
+
 
 /**
  * Created by user on 6/7/17.
@@ -84,6 +89,10 @@ public class GameScreen extends FrameLayout {
             counter = coord.size();
             canvas.drawBitmap(cage,Square.Square_x(Level_1.pit_square1),Square.Square_y(Level_1.pit_square1),null);
             canvas.drawBitmap(youwin,MainMenu.width1/7,MainMenu.height1/4,null);
+            Editor ed = MainMenu.sPref.edit();
+            ed.putBoolean("Level_1", true);
+            ed.commit();
+
         }
         if (coord.get(index).a == Square.Square_x(Level_1.character_square1) && coord.get(index).b==Square.Square_y(Level_1.character_square1)) {
             canvas.drawBitmap(new_monster,Square.Square_x(Level_1.character_square1), Square.Square_y(Level_1.character_square1), null);
