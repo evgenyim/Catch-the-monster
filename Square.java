@@ -1,4 +1,3 @@
-
 package com.example.user.catchthemonster;
 
 /**
@@ -16,3 +15,4 @@ public class Square {
     {
         return (square/5+1)*(MainMenu.width1/5);
     }
+}

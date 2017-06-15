@@ -12,16 +12,16 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content" />
 
-    <com.example.user.catchthemonster.GameScreen
-        android:id="@+id/game_screen"
+    <com.example.user.catchthemonster.GameScreen_7
+        android:id="@+id/game_screen_7"
         android:layout_width="match_parent"
-        android:background="#1f5d03"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#1f5d03">
 
-    </com.example.user.catchthemonster.GameScreen>
+    </com.example.user.catchthemonster.GameScreen_7>
 
     <ImageView
         android:id="@+id/imageView"
@@ -38,7 +38,9 @@
     <Button
         android:id="@+id/btn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="550dp" />
 
     <Button
         android:id="@+id/btn2"

@@ -28,12 +28,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
-public class Level_1 extends AppCompatActivity {
+public class Level_9 extends AppCompatActivity { //
     static int width1;
     static int pit_square1;
     static ArrayList<Integer> obstacle = new ArrayList<>();
     static int character_square1;
-    static int[] forobst1 = {};
+    static int[] forobst1 = {7,16};
     static boolean clicked = false;
     static ArrayList<Integer> user_obstacle = new ArrayList<>();
     static int obstacle_amount1;
@@ -47,23 +47,22 @@ public class Level_1 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_level_1);
+        setContentView(R.layout.activity_level_9); //
         final Editor ed = MainMenu.sPref.edit();
-        if (! MainMenu.sPref.contains("Level_1")) {
-            ed.putBoolean("Level_1", false);
+        if (! MainMenu.sPref.contains("Level_9")) {//
+            ed.putBoolean("Level_9", false);//
             ed.commit();
         }
-        Log.d("12",String.valueOf(MainMenu.sPref.getBoolean("Level_1",true)));
 
 
 
         final boolean started = false;
         final ArrayList<Integer> way = new ArrayList<>();
-        final GameScreen gameScreen = (GameScreen) findViewById(R.id.game_screen);
+        final GameScreen_9 gameScreen = (GameScreen_9) findViewById(R.id.game_screen_9); //////
         gameScreen.counter = 0;
         gameScreen.loose = false;
-        final int monster_square = 0;
-        final int pit_square = 12;
+        final int moster_square = 5;
+        final int pit_square = 13;
         final int character_square = 24;
 
         character_square1 = character_square;
@@ -72,7 +71,7 @@ public class Level_1 extends AppCompatActivity {
         user_obstacle = new ArrayList<>();
         started1 = started;
 
-        gameScreen.addcoord(new Pair1(Square.Square_x(monster_square), Square.Square_y(monster_square)));
+        gameScreen.addcoord(new Pair1(Square.Square_x(moster_square), Square.Square_y(moster_square)));
 
         final Button btn2 = (Button) findViewById(R.id.btn2);
         btn2.setBackgroundResource(R.drawable.start_button_background);
@@ -120,7 +119,7 @@ public class Level_1 extends AppCompatActivity {
                 int field_side = 5;
 
 
-                bfs.bfs(field_side, monster_square, character_square, way, pit_square, obstacle);
+                bfs.bfs(field_side, moster_square, character_square, way, pit_square, obstacle);
                 Log.d("bfs", String.valueOf(way.size()));
                 int p1 = way.get(way.size() - 1);
                 for (int i = way.size() - 2; i >= 0; i--) {
@@ -187,7 +186,7 @@ public class Level_1 extends AppCompatActivity {
         final Bitmap no_obstacle = Bitmap.createScaledBitmap(bitmap3,MainMenu.width1/5, MainMenu.width1/5, false);
         final Drawable no_obstacle_1 = new BitmapDrawable(getResources(), no_obstacle);
 
-        final int[] obstacles = {0};
+        final int[] obstacles = {2};
         final String[] o = {String.valueOf(obstacles[0])};
 
         final Button btn1 = (Button) findViewById(R.id.btn);
@@ -207,7 +206,7 @@ public class Level_1 extends AppCompatActivity {
 
         final ImageView level = (ImageView) findViewById(R.id.imageView);
 
-        final Bitmap bitmap4 = BitmapFactory.decodeResource(getResources(),R.drawable.level1);
+        final Bitmap bitmap4 = BitmapFactory.decodeResource(getResources(),R.drawable.level8); //
         final Bitmap level_1 = Bitmap.createScaledBitmap(bitmap4,MainMenu.width1, MainMenu.width1/5, false);
         final Drawable level1 = new BitmapDrawable(getResources(), level_1);
         level.setBackground(level1);
@@ -239,6 +238,7 @@ public class Level_1 extends AppCompatActivity {
         obstacle_amount1 = obstacle_amount[0];
         final boolean[] out_of_obst = {false};
         final View.OnTouchListener list = new View.OnTouchListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (! started1) {
@@ -248,7 +248,7 @@ public class Level_1 extends AppCompatActivity {
 
                         switch (event.getAction()) {
                             case MotionEvent.ACTION_DOWN:
-                                if (NumberByCoord.NumberByCoord(x[0], y[0]) >= -1 && NumberByCoord.NumberByCoord(x[0], y[0]) < 25  && NumberByCoord.NumberByCoord(x[0], y[0])!= pit_square && NumberByCoord.NumberByCoord(x[0], y[0])!= character_square && NumberByCoord.NumberByCoord(x[0], y[0])!=monster_square && !obstacle.contains(NumberByCoord.NumberByCoord(x[0], y[0]))) {
+                                if (NumberByCoord.NumberByCoord(x[0], y[0]) >= -1 && NumberByCoord.NumberByCoord(x[0], y[0]) < 25  && NumberByCoord.NumberByCoord(x[0], y[0])!= pit_square && NumberByCoord.NumberByCoord(x[0], y[0])!= character_square && NumberByCoord.NumberByCoord(x[0], y[0])!=moster_square && !obstacle.contains(NumberByCoord.NumberByCoord(x[0], y[0]))) {
                                     btn1.setBackground(obstacle_1);
                                     obstacle.add(NumberByCoord.NumberByCoord(x[0], y[0]));
                                     user_obstacle.add(NumberByCoord.NumberByCoord(x[0], y[0]));
@@ -270,15 +270,15 @@ public class Level_1 extends AppCompatActivity {
             }
         };
         gameScreen.setOnTouchListener(list);
-        Level_1 this_ = this;
+        Level_9 this_ = this; //
         this_ = this;
-        final Level_1 finalThis_ = this_;
+        final Level_9 finalThis_ = this_; //
         final View.OnClickListener list1 = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(finalThis_,levels.class);
                 startActivity(intent1);
-                Intent intent = new Intent(finalThis_,Level_2.class);
+                Intent intent = new Intent(finalThis_,Level_10.class); //
                 startActivity(intent);
             }
         };
@@ -286,7 +286,7 @@ public class Level_1 extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        Level_1 this_ = this;
+        Level_9 this_ = this;
         Intent intent = new Intent(this_,levels.class);
         startActivity(intent);
     }

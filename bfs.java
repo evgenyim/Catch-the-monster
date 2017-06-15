@@ -110,6 +110,7 @@ public class bfs {
             way2.add(prev);
         prev = character_index;
         while (prev != monster_index){
+            Log.d("bbb", String.valueOf(12332));
             prev = parent2[prev];
             way2.add(prev);
         }
