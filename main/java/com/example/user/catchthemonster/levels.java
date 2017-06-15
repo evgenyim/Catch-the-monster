@@ -38,14 +38,13 @@ public class levels extends AppCompatActivity {
 
 
         int space_y = MainMenu.height1 - 6 * MainMenu.width1/5;
-        Log.d("huy", "jopa");
         final Button button1 = (Button) findViewById(R.id.button1);
         btn1 = button1;
         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) button1.getLayoutParams();
         lp.height = MainMenu.width1/6;
         lp.width = MainMenu.width1/6;
         button1.setLayoutParams(lp);
-        button1.setY(MainMenu.height1/8+MainMenu.height1/8/8);
+        button1.setY(MainMenu.height1/8+MainMenu.height1/8);
         button1.setX(MainMenu.width1/6/6);
         if (MainMenu.sPref.contains("Level_1")) {
             if (MainMenu.sPref.getBoolean("Level_1", true)) {
@@ -57,7 +56,7 @@ public class levels extends AppCompatActivity {
         final Button button2 = (Button) findViewById(R.id.button2);
         btn2 = button2;
         button2.setLayoutParams(lp);
-        button2.setY(MainMenu.height1/8+MainMenu.height1/8/8);
+        button2.setY(MainMenu.height1/8+MainMenu.height1/8);
         button2.setX(MainMenu.width1/6 + MainMenu.width1/6/6*2);
         if (MainMenu.sPref.contains("Level_1")) {
             if (MainMenu.sPref.getBoolean("Level_1", true)){
@@ -75,7 +74,7 @@ public class levels extends AppCompatActivity {
         final Button button3 = (Button) findViewById(R.id.button3);
         btn3 = button3;
         button3.setLayoutParams(lp);
-        button3.setY(MainMenu.height1/8+MainMenu.height1/8/8);
+        button3.setY(MainMenu.height1/8+MainMenu.height1/8);
         button3.setX(MainMenu.width1/6*2 + MainMenu.width1/6/6*3);
         if (MainMenu.sPref.contains("Level_2")) {
             if (MainMenu.sPref.getBoolean("Level_2", true)){
@@ -92,7 +91,7 @@ public class levels extends AppCompatActivity {
         final Button button4 = (Button) findViewById(R.id.button4);
         btn4 = button4;
         button4.setLayoutParams(lp);
-        button4.setY(MainMenu.height1/8+MainMenu.height1/8/8);
+        button4.setY(MainMenu.height1/8+MainMenu.height1/8);
         button4.setX(MainMenu.width1/6*3 + MainMenu.width1/6/6*4);
         if (MainMenu.sPref.contains("Level_3")) {
             if (MainMenu.sPref.getBoolean("Level_3", true)){
@@ -109,7 +108,7 @@ public class levels extends AppCompatActivity {
         final Button button5 = (Button) findViewById(R.id.button5);
         btn5 = button5;
         button5.setLayoutParams(lp);
-        button5.setY(MainMenu.height1/8+MainMenu.height1/8/8);
+        button5.setY(MainMenu.height1/8+MainMenu.height1/8);
         button5.setX(MainMenu.width1/6*4 + MainMenu.width1/6/6*5);
         if (MainMenu.sPref.contains("Level_4")) {
             if (MainMenu.sPref.getBoolean("Level_4", true)){
@@ -126,7 +125,7 @@ public class levels extends AppCompatActivity {
         final Button button6 = (Button) findViewById(R.id.button6);
         btn6 = button6;
         button6.setLayoutParams(lp);
-        button6.setY(MainMenu.height1/8*2+MainMenu.height1/8/8*2);
+        button6.setY(MainMenu.height1/8*2+MainMenu.height1/8 + MainMenu.height1/64);
         button6.setX(MainMenu.width1/6 *0 + MainMenu.width1/6/6*1);
         if (MainMenu.sPref.contains("Level_5")) {
             if (MainMenu.sPref.getBoolean("Level_5", true)){
@@ -143,7 +142,7 @@ public class levels extends AppCompatActivity {
         final Button button7 = (Button) findViewById(R.id.button7);
         btn7 = button7;
         button7.setLayoutParams(lp);
-        button7.setY(MainMenu.height1/8*2+MainMenu.height1/8/8*2);
+        button7.setY(MainMenu.height1/8*2+MainMenu.height1/8 + MainMenu.height1/64);
         button7.setX(MainMenu.width1/6 *1 + MainMenu.width1/6/6*2);
         if (MainMenu.sPref.contains("Level_6")) {
             if (MainMenu.sPref.getBoolean("Level_6", true)){
@@ -160,7 +159,7 @@ public class levels extends AppCompatActivity {
         final Button button8 = (Button) findViewById(R.id.button8);
         btn8 = button8;
         button8.setLayoutParams(lp);
-        button8.setY(MainMenu.height1/8*2+MainMenu.height1/8/8*2);
+        button8.setY(MainMenu.height1/8*2+MainMenu.height1/8 + MainMenu.height1/64);
         button8.setX(MainMenu.width1/6 *2 + MainMenu.width1/6/6*3);
         if (MainMenu.sPref.contains("Level_7")) {
             if (MainMenu.sPref.getBoolean("Level_7", true)){
@@ -177,7 +176,7 @@ public class levels extends AppCompatActivity {
         final ImageView level = (ImageView) findViewById(R.id.imageView);
         btn1 = button1;
         final Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.level);
-        final Bitmap levels = Bitmap.createScaledBitmap(bitmap,MainMenu.width1, MainMenu.height1/8, false);
+        final Bitmap levels = Bitmap.createScaledBitmap(bitmap,MainMenu.width1, MainMenu.height1/8*2, false);
         final Drawable levels_1 = new BitmapDrawable(getResources(), levels);
         level.setBackground(levels_1);
 

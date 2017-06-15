@@ -204,7 +204,7 @@ public class Level_2 extends AppCompatActivity {
 
         final ImageView level = (ImageView) findViewById(R.id.imageView);
 
-        final Bitmap bitmap4 = BitmapFactory.decodeResource(getResources(),R.drawable.level1);
+        final Bitmap bitmap4 = BitmapFactory.decodeResource(getResources(),R.drawable.level2);
         final Bitmap level_1 = Bitmap.createScaledBitmap(bitmap4,MainMenu.width1, MainMenu.width1/5, false);
         final Drawable level1 = new BitmapDrawable(getResources(), level_1);
         level.setBackground(level1);
