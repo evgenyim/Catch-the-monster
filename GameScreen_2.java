@@ -27,21 +27,21 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by user on 6/7/17.
  */
 
-public class GameScreen extends FrameLayout {
+public class GameScreen_2 extends FrameLayout {
     static int counter;
     static boolean loose;
 
     ArrayList <Pair1> coord = new ArrayList<>();
 
-    public GameScreen(@NonNull Context context) {
+    public GameScreen_2(@NonNull Context context) {
         super(context);
     }
 
-    public GameScreen(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public GameScreen_2(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public GameScreen(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public GameScreen_2(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -74,35 +74,35 @@ public class GameScreen extends FrameLayout {
         Bitmap new_monster = Bitmap.createScaledBitmap(bitmap8, MainMenu.width1/5, MainMenu.width1/5, false);
 
         canvas.drawBitmap(field,0, MainMenu.width1/5,null);
-        canvas.drawBitmap(pit,Square.Square_x(Level_1.pit_square1),Square.Square_y(Level_1.pit_square1),null);
+        canvas.drawBitmap(pit,Square.Square_x(Level_2.pit_square1),Square.Square_y(Level_2.pit_square1),null);
 
         int index = Math.min(counter, coord.size() - 1);
         canvas.drawBitmap(monster,coord.get(index).a, coord.get(index).b,null);
-        for(int i = 0;i<Level_1.forobst1.length;i++) {
-            canvas.drawBitmap(stone,Square.Square_x(Level_1.forobst1[i]),Square.Square_y(Level_1.forobst1[i]),null);
+        for(int i = 0;i<Level_2.forobst1.length;i++) {
+            canvas.drawBitmap(stone,Square.Square_x(Level_2.forobst1[i]),Square.Square_y(Level_2.forobst1[i]),null);
         }
-        for(int i = 0;i<Level_1.user_obstacle.size();i++) {
-            canvas.drawBitmap(obstacle,Square.Square_x(Level_1.user_obstacle.get(i)),Square.Square_y(Level_1.user_obstacle.get(i)),null);
+        for(int i = 0;i<Level_2.user_obstacle.size();i++) {
+            canvas.drawBitmap(obstacle,Square.Square_x(Level_2.user_obstacle.get(i)),Square.Square_y(Level_2.user_obstacle.get(i)),null);
         }
 
-        if (coord.get(index).a == Square.Square_x(Level_1.pit_square1) && coord.get(index).b==Square.Square_y(Level_1.pit_square1)) {
+        if (coord.get(index).a == Square.Square_x(Level_2.pit_square1) && coord.get(index).b==Square.Square_y(Level_2.pit_square1)) {
             counter = coord.size();
-            canvas.drawBitmap(cage,Square.Square_x(Level_1.pit_square1),Square.Square_y(Level_1.pit_square1),null);
+            canvas.drawBitmap(cage,Square.Square_x(Level_2.pit_square1),Square.Square_y(Level_2.pit_square1),null);
             canvas.drawBitmap(youwin,MainMenu.width1/7,MainMenu.height1/4,null);
             Editor ed = MainMenu.sPref.edit();
-            ed.putBoolean("Level_1", true);
-            levels.btn1.setBackgroundResource(R.drawable.start_button_background_star);
-            levels.btn2.setBackgroundResource(R.drawable.start_button_background);
-            levels.btn2.setText("2");
+            levels.btn2.setBackgroundResource(R.drawable.start_button_background_star);
+            levels.btn3.setBackgroundResource(R.drawable.start_button_background);
+            levels.btn3.setText("3");
+            ed.putBoolean("Level_2", true);
             ed.commit();
 
         }
-        if (coord.get(index).a == Square.Square_x(Level_1.character_square1) && coord.get(index).b==Square.Square_y(Level_1.character_square1)) {
-            canvas.drawBitmap(new_monster,Square.Square_x(Level_1.character_square1), Square.Square_y(Level_1.character_square1), null);
+        if (coord.get(index).a == Square.Square_x(Level_2.character_square1) && coord.get(index).b==Square.Square_y(Level_2.character_square1)) {
+            canvas.drawBitmap(new_monster,Square.Square_x(Level_2.character_square1), Square.Square_y(Level_2.character_square1), null);
             loose = true;
         }
         if  (! loose)
-            canvas.drawBitmap(character,Square.Square_x(Level_1.character_square1),Square.Square_y(Level_1.character_square1),null);
+            canvas.drawBitmap(character,Square.Square_x(Level_2.character_square1),Square.Square_y(Level_2.character_square1),null);
 
         counter ++;
         if (counter < coord.size()){
