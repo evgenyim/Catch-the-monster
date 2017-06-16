@@ -1,26 +1,68 @@
-
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.user.catchthemonster.Help">
 
-    <com.example.user.catchthemonster.GameScreen
-        android:id="@+id/game_screen"
-        android:layout_width="368dp"
-        android:layout_height="495dp"
-        android:background="#fff"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp">
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#267900">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
-    </com.example.user.catchthemonster.GameScreen>
+            android:orientation="vertical"
+            android:weightSum="1">
 
-</android.support.constraint.ConstraintLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Stop the monster"
+                android:textColor="#bc021e"
+                android:textSize="60dp"
+                android:gravity="center" />
 
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="650dp"
+                app:srcCompat="@drawable/tutorial_1"
+                android:layout_weight="0.08" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Block him"
+                android:textColor="#bc021e"
+                android:textSize="60dp"
+                android:gravity="center" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="650dp"
+                app:srcCompat="@drawable/tutorial_2" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="And catch him!"
+                android:textColor="#bc021e"
+                android:textSize="60dp"
+                android:gravity="center" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="650dp"
+                app:srcCompat="@drawable/tutorial_3" />
+
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>
