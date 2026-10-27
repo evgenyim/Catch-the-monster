@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#233d32">
+  <meta name="description" content="Лесная головоломка: расставляй стены, спасай путешественника и заманивай монстра в ловушку. 24 уровня, без рекламы и интернета.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'">
+  <title>Поймай монстра — лесная головоломка</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Поймай монстра, карта приключения"><span id="brand-icon"></span><span>ЛЕСНОЕ<br><strong>ПРИКЛЮЧЕНИЕ</strong></span></a>
+      <div class="topbar-actions"><span class="saved-indicator"><i></i><span id="save-status">Прогресс сохранён</span></span><button class="icon-button" id="sound" aria-label="Выключить звук"></button><button class="icon-button" id="help" aria-label="Как играть"></button></div>
+    </header>
+    <main>
+      <section class="intro">
+        <div><p class="eyebrow"><span class="tiny-spark">✦</span> МАЛЕНЬКИЙ ЛЕС. БОЛЬШАЯ ХИТРОСТЬ.</p><h1>Поймай <span>монстра<span class="title-dot">.</span></span></h1><p class="intro-copy">Он знает кратчайший путь. Ты знаешь кое-что получше.</p></div>
+        <button id="open-map" class="map-button"><span class="map-button-icon" id="map-icon"></span><span><small>ТВОЁ ПРИКЛЮЧЕНИЕ</small><strong>Карта уровней <span>↗</span></strong></span></button>
+      </section>
+      <div class="game-layout">
+        <section class="play-panel" aria-label="Игровое поле">
+          <div class="level-bar"><div class="chapter-label"><span class="chapter-dot"></span><span id="chapter-name"></span></div><div class="level-stars" id="level-stars" aria-label="Звёзды за уровень"></div></div>
+          <div class="level-heading"><h2 id="level-name"></h2><span id="level-number" class="level-number"></span></div>
+          <div class="board-surround"><div class="board-coordinates" id="coordinates" aria-hidden="true"></div><div class="board-frame"><div id="board" class="board" role="group" aria-label="Поле: выберите клетку, чтобы поставить или убрать стену"></div><div id="monster-layer" class="monster-layer" aria-hidden="true"></div></div><span class="board-caption">ПЛАНИРУЙ. ЗАМАНИВАЙ. ПОБЕЖДАЙ.</span></div>
+          <div class="board-tools"><div class="wall-inventory"><span id="wall-icon"></span><span><strong id="wall-count"></strong><small>стен в запасе</small></span><div id="wall-dots" class="wall-dots"></div></div><div class="edit-actions"><button id="undo" class="icon-button" aria-label="Отменить последнюю стену" title="Отменить (Ctrl+Z)"></button><button id="reset" class="icon-button" aria-label="Начать уровень заново" title="Заново (R)"></button><button id="speed" class="speed-button" aria-label="Ускорить анимацию">1×</button></div></div>
+          <button id="start" class="start-button"><span id="start-icon"></span><span id="start-label">Выпустить монстра</span><span class="button-arrow">↗</span></button>
+          <p id="status" class="status-line" role="status" aria-live="polite">Нажми на свободную клетку, чтобы поставить стену.</p>
+        </section>
+        <aside class="field-guide">
+          <section class="mission-card"><div class="card-kicker"><span>01 / ПОЛЕВОЙ ДНЕВНИК</span><span>✳</span></div><h2>Перехитри<br>лесного гостя.</h2><p id="mission-copy">Расставь стены так, чтобы кратчайший путь к путешественнику прошёл через ловушку.</p><div class="character-scene" id="character-scene" aria-hidden="true"></div><span class="scene-caption">кажется, кто-то проголодался…</span></section>
+          <section class="rules-card"><h3>Твой план на сегодня</h3><ol><li><span>1</span><div><strong>Измени маршрут</strong><p>Поставь стены на свободные клетки.</p></div></li><li><span>2</span><div><strong>Выпусти монстра</strong><p>Он пойдёт к герою самым коротким путём.</p></div></li><li><span>3</span><div><strong>Лови момент</strong><p>Заведи его в ловушку и спаси героя.</p></div></li></ol><button id="hint" class="hint-button"><span id="hint-icon"></span>Небольшая подсказка <span>↗</span></button><p class="hint-text" id="hint-text" hidden></p></section>
+          <div class="journey-card"><div><span class="eyebrow">КОЛЛЕКЦИЯ ПОБЕД</span><strong id="total-stars">0 <span>/ 72 звезды</span></strong></div><span class="journey-star">✦</span><div class="journey-track"><i id="journey-fill"></i></div></div>
+        </aside>
+      </div>
+      <div class="legend" aria-label="Обозначения"><span><i class="legend-icon" id="legend-hero"></i>Путешественник</span><span><i class="legend-icon" id="legend-monster"></i>Монстр</span><span><i class="legend-icon" id="legend-trap"></i>Ловушка</span><span><i class="legend-icon" id="legend-rock"></i>Камень</span><span id="legend-portal-wrap" hidden><i class="legend-icon" id="legend-portal"></i>Портал</span></div>
+    </main>
+    <footer><span>Сделано для любопытных умов <span>↗</span></span><span>24 уровня · Без спешки · Без рекламы</span><button id="about">Об игре</button></footer>
+  </div>
+  <dialog id="modal" aria-labelledby="modal-title"><button id="close-modal" class="modal-close icon-button" aria-label="Закрыть">×</button><div id="modal-content"></div></dialog>
+</body>
+</html>

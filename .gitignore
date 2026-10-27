@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.DS_Store
+.gradle/
+**/build/
+local.properties
+*.jks
+*.keystore
+.idea/
+*.iml
+test-results/
+playwright-report/
+.toolchain/

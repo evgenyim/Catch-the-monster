@@ -1,0 +1,15 @@
+{
+  "name": "catch-the-monster",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "An offline woodland strategy puzzle for browsers and Android.",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "start": "node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check web/app.js && node --check web/engine.js && node --check web/levels.js && node --check web/storage.js"
+  }
+}
