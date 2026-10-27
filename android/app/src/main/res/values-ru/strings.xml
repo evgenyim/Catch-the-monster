@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Поймай монстрика</string>
+    <string name="app_name">CTM</string>
     <string name="webview_unavailable">Android System WebView недоступен. Включите или обновите его в настройках устройства и снова откройте игру.</string>
 </resources>

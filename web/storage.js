@@ -1,4 +1,5 @@
 export const STORAGE_KEY = 'catch-the-monster:v2';
+export const RULES_REVISION = 'classic-diagonals-v1';
 export function cleanSave(value = {}) {
   const scores = {};
   if (value && typeof value === 'object' && value.scores && typeof value.scores === 'object') {
@@ -8,9 +9,10 @@ export function cleanSave(value = {}) {
   }
   const unlocked = Array.from({length: 24}, (_, i) => i + 1).find(id => !scores[id]) || 24;
   const level = Number.isInteger(value?.level) && value.level >= 1 && value.level <= unlocked ? value.level : unlocked;
-  const draft = value?.draft?.level === level && Array.isArray(value.draft.walls)
+  const draft = value?.rulesRevision === RULES_REVISION && value?.draft?.level === level && Array.isArray(value.draft.walls)
     ? { level, walls: [...new Set(value.draft.walls.filter(n => Number.isInteger(n) && n >= 0 && n < 49))], hinted: value.draft.hinted === true } : null;
-  return { version: 2, scores, level, unlocked, sound: value?.sound !== false, fast: value?.fast === true, draft };
+  const rulesChanged = value?.rulesRevision !== RULES_REVISION && (Object.keys(scores).length > 0 || Boolean(value?.draft));
+  return { version: 3, rulesRevision: RULES_REVISION, rulesChanged, scores, level, unlocked, sound: value?.sound !== false, fast: value?.fast === true, draft };
 }
 export function loadSave(storage) {
   try { return cleanSave(JSON.parse((storage ?? globalThis.localStorage).getItem(STORAGE_KEY)) || {}); }

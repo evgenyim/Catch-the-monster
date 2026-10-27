@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Catch the Monster</string>
+    <string name="app_name">CTM</string>
     <string name="webview_unavailable">Android System WebView is unavailable. Enable or update it in your device settings, then reopen Catch the Monster.</string>
 </resources>

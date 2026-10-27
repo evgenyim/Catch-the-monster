@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { cleanSave, loadSave, saveGame, mergeProgress, STORAGE_KEY } from '../web/storage.js';
+import { cleanSave, loadSave, saveGame, mergeProgress, STORAGE_KEY, RULES_REVISION } from '../web/storage.js';
 test('invalid and corrupt saves recover without losing a playable first level', () => {
   assert.equal(cleanSave(null).unlocked, 1);
   assert.equal(loadSave({getItem: () => '{broken'}).level, 1);
@@ -15,7 +15,7 @@ test('progress is contiguous, bounded, and records validated stars', () => {
 test('draft and settings round trip; unavailable storage is safe', () => {
   const data = new Map();
   const storage = {getItem:k=>data.get(k),setItem:(k,v)=>data.set(k,v)};
-  assert.ok(saveGame({level:1,sound:false,draft:{level:1,walls:[1,1,-2,'a',2],hinted:true}},storage));
+  assert.ok(saveGame({rulesRevision:RULES_REVISION,level:1,sound:false,draft:{level:1,walls:[1,1,-2,'a',2],hinted:true}},storage));
   assert.ok(data.has(STORAGE_KEY));
   assert.deepEqual(loadSave(storage).draft.walls,[1,2]);
   assert.equal(loadSave(storage).sound,false);
@@ -50,4 +50,19 @@ test('a throwing localStorage property getter is caught before access', () => {
     if (original) Object.defineProperty(globalThis, 'localStorage', original);
     else delete globalThis.localStorage;
   }
+});
+
+test('the original-rules update keeps achievements but invalidates an old attempt once', () => {
+  const old = {version:2,scores:{1:3,2:2},level:3,sound:false,draft:{level:3,walls:[7,17],hinted:true}};
+  const migrated = cleanSave(old);
+  assert.deepEqual(migrated.scores,{1:3,2:2});
+  assert.equal(migrated.unlocked,3);
+  assert.equal(migrated.level,3);
+  assert.equal(migrated.sound,false);
+  assert.equal(migrated.draft,null);
+  assert.equal(migrated.rulesChanged,true);
+  assert.equal(migrated.rulesRevision,RULES_REVISION);
+  assert.equal(cleanSave(migrated).rulesChanged,false);
+  const current = cleanSave({...migrated,draft:{level:3,walls:[2,7,17,22],hinted:false}});
+  assert.deepEqual(current.draft.walls,[2,7,17,22]);
 });

@@ -1,8 +1,8 @@
 /**
  * Catch the Monster — deterministic, renderer-independent puzzle rules.
  *
- * Every orthogonal or diagonal move costs one step. A diagonal is legal only
- * when BOTH orthogonal neighbors are clear: walls cannot be cut at corners.
+ * Every orthogonal or diagonal move costs one step. Only the destination cell
+ * must be clear: a diagonal may pass beside or between walls.
  * Portals cost no additional step; a move records both entry and exit in path.
  * The monster chooses the shortest route to the hero. Of equally short routes
  * it prefers one without the pit, then the fixed direction order below. It does
@@ -10,10 +10,10 @@
  * the pit catches it. An unreachable hero produces `blocked`, never a victory.
  */
 
-// Clockwise from north; this order is part of the deterministic game rules.
+// The original game's reading order: NW, N, NE, W, E, SW, S, SE.
 const DIRECTIONS = Object.freeze([
-  [-1, 0], [-1, 1], [0, 1], [1, 1],
-  [1, 0], [1, -1], [0, -1], [-1, -1],
+  [-1, -1], [-1, 0], [-1, 1], [0, -1],
+  [0, 1], [1, -1], [1, 0], [1, 1],
 ]);
 
 function wallArray(walls) {
@@ -129,7 +129,6 @@ export function getRoute(level, walls = []) {
       if (nextRow < 0 || nextRow >= size || nextCol < 0 || nextCol >= size) continue;
       const entry = nextRow * size + nextCol;
       if (blocked.has(entry)) continue;
-      if (dr && dc && (blocked.has((row + dr) * size + col) || blocked.has(row * size + col + dc))) continue;
       let destination = entry;
       if (level.portals?.[0] === entry) destination = level.portals[1];
       else if (level.portals?.[1] === entry) destination = level.portals[0];

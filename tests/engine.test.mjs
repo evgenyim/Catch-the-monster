@@ -9,10 +9,42 @@ const fixture = (overrides = {}) => ({
   hint: '', ...overrides,
 });
 
+// Independent reference: compare an ordinary shortest path with a second
+// shortest-path search that treats the pit as a wall. This does not share the
+// production engine's two-state BFS or its direction tie-breaking logic.
+function referenceOutcome(level, walls) {
+  function distance(avoidPit) {
+    const blocked = new Set([...level.rocks, ...walls, ...(avoidPit ? [level.trap] : [])]);
+    const distances = new Map([[level.monster, 0]]);
+    const queue = [level.monster];
+    for (let index = 0; index < queue.length; index += 1) {
+      const cell = queue[index];
+      if (cell === level.hero) return distances.get(cell);
+      const row = Math.floor(cell / level.size);
+      const col = cell % level.size;
+      for (let nextRow = Math.max(0, row - 1); nextRow <= Math.min(level.size - 1, row + 1); nextRow += 1) {
+        for (let nextCol = Math.max(0, col - 1); nextCol <= Math.min(level.size - 1, col + 1); nextCol += 1) {
+          let destination = nextRow * level.size + nextCol;
+          if (destination === cell || blocked.has(destination)) continue;
+          if (destination === level.portals?.[0]) destination = level.portals[1];
+          else if (destination === level.portals?.[1]) destination = level.portals[0];
+          if (distances.has(destination)) continue;
+          distances.set(destination, distances.get(cell) + 1);
+          queue.push(destination);
+        }
+      }
+    }
+    return Infinity;
+  }
+  const shortest = distance(false);
+  if (shortest === Infinity) return 'blocked';
+  return shortest < distance(true) ? 'win' : 'lose';
+}
+
 function hasSolutionUsing(level, count) {
   const cells = availableCells(level);
   function search(index, walls) {
-    if (walls.length === count) return getRoute(level, walls).outcome === 'win';
+    if (walls.length === count) return referenceOutcome(level, walls) === 'win';
     for (let next = index; next <= cells.length - (count - walls.length); next += 1) {
       if (search(next + 1, [...walls, cells[next]])) return true;
     }
@@ -42,6 +74,7 @@ for (const level of LEVELS) {
     assert.equal(getRoute(level, []).outcome, 'lose', 'A puzzle must require player input.');
     const result = getRoute(level, level.solution);
     assert.equal(result.outcome, 'win');
+    assert.equal(referenceOutcome(level, level.solution), 'win');
     assert.equal(result.path[0], level.monster);
     assert.equal(result.path.at(-1), level.trap);
     assert.equal(result.path.includes(level.hero), false);
@@ -56,30 +89,64 @@ for (const level of LEVELS) {
   });
 }
 
-test('shortest path uses diagonals when both adjacent edges are clear', () => {
+test('an unobstructed diagonal costs one move', () => {
   assert.deepEqual(getRoute(fixture()), { path: [0, 4, 8], outcome: 'lose' });
 });
 
-test('a diagonal cannot cut the corner of either a placed wall or a rock', () => {
+test('diagonals may pass beside or between placed walls and rocks', () => {
   const level = fixture();
-  assert.equal(getRoute(level, [1]).path[1], 3);
-  assert.equal(getRoute(level, [3]).path[1], 1);
-  assert.deepEqual(getRoute(level, [1, 3]), { path: [0], outcome: 'blocked' });
-  assert.equal(getRoute(fixture({ rocks: [1] }), []).path[1], 3);
-  assert.deepEqual(getRoute(fixture({ rocks: [1, 3] }), []), { path: [0], outcome: 'blocked' });
+  const expected = { path: [0, 4, 8], outcome: 'lose' };
+  for (const walls of [[1], [3], [1, 3]]) assert.deepEqual(getRoute(level, walls), expected);
+  for (const rocks of [[1], [3], [1, 3]]) assert.deepEqual(getRoute(fixture({ rocks })), expected);
+  assert.deepEqual(getRoute(fixture({ rocks: [1] }), [3]), expected);
+  assert.equal(getRoute(level, [4]).path.includes(4), false, 'The destination itself must still be clear.');
 });
 
 test('pit-free shortest paths win ties, even when a pit route exists', () => {
-  const level = fixture({ size: 5, monster: 10, hero: 14, trap: 12 });
+  const level = fixture({ size: 5, monster: 10, hero: 14, trap: 12, budget: 4 });
   const result = getRoute(level);
   assert.equal(result.outcome, 'lose');
   assert.equal(result.path.length, 5);
   assert.equal(result.path.includes(level.trap), false);
-  assert.deepEqual(getRoute(level, [6, 16]), { path: [10, 11, 12], outcome: 'win' });
+  assert.equal(referenceOutcome(level, []), 'lose');
+  assert.deepEqual(getRoute(level, [2, 7, 17, 22]), { path: [10, 6, 12], outcome: 'win' });
+});
+
+test('screenshot regression: walls above and below the pit leave a four-move safe route', () => {
+  const level = fixture({ size: 5, monster: 10, hero: 14, trap: 12 });
+  assert.deepEqual(getRoute(level, [7, 17]), { path: [10, 6, 2, 8, 14], outcome: 'lose' });
+  assert.equal(referenceOutcome(level, [7, 17]), 'lose');
+});
+
+test('safe paths win ties even when direction order visits the pit first', () => {
+  const level = fixture({ monster: 6, hero: 2, trap: 4, rocks: [1], budget: 3 });
+  assert.deepEqual(getRoute(level), { path: [6, 4], outcome: 'win' }, 'The only two-move path must catch the monster.');
+  const tie = fixture({ monster: 6, hero: 2, trap: 1, rocks: [4], budget: 3 });
+  assert.deepEqual(getRoute(tie), { path: [6, 7, 5, 2], outcome: 'lose' });
+});
+
+test('all 32,256 arrangements on a 3×3 board match independent shortest-path rules', () => {
+  let checked = 0;
+  for (let monster = 0; monster < 9; monster += 1) {
+    for (let hero = 0; hero < 9; hero += 1) {
+      if (hero === monster) continue;
+      for (let trap = 0; trap < 9; trap += 1) {
+        if (trap === monster || trap === hero) continue;
+        const level = fixture({ monster, hero, trap, budget: 6 });
+        const available = availableCells(level);
+        for (let mask = 0; mask < 2 ** available.length; mask += 1) {
+          const walls = available.filter((_, index) => mask & (1 << index));
+          assert.equal(getRoute(level, walls).outcome, referenceOutcome(level, walls), JSON.stringify({ monster, hero, trap, walls }));
+          checked += 1;
+        }
+      }
+    }
+  }
+  assert.equal(checked, 32256);
 });
 
 test('an unreachable hero is blocked even when the pit can be reached', () => {
-  const level = fixture({ trap: 6, rocks: [5, 7], budget: 2 });
+  const level = fixture({ trap: 6, rocks: [4, 5, 7], budget: 2 });
   assert.deepEqual(getRoute(level), { path: [0], outcome: 'blocked' });
 });
 
@@ -97,7 +164,7 @@ test('the journey ends immediately at a pit after a portal', () => {
 
 test('equally short safe routes use a deterministic direction order', () => {
   const level = fixture({ rocks: [4], trap: 6 });
-  const expected = { path: [0, 1, 2, 5, 8], outcome: 'lose' };
+  const expected = { path: [0, 1, 5, 8], outcome: 'lose' };
   for (let attempt = 0; attempt < 20; attempt += 1) assert.deepEqual(getRoute(level), expected);
 });
 

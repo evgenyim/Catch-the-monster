@@ -1,29 +1,22 @@
-const svg = (content, viewBox = '0 0 100 100') => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" fill="none" aria-hidden="true">${content}</svg>`;
-export const art = {
-  monster: svg(`<ellipse cx="50" cy="87" rx="34" ry="7" fill="#263d2c" opacity=".16"/><path d="M28 31 21 11 42 25M61 26 80 12 75 38" fill="#bcd791" stroke="#385440" stroke-width="2.5" stroke-linejoin="round"/><path d="M24 45C22 22 76 20 78 47L82 73Q81 85 66 84L59 79H39L31 85Q17 85 19 72Z" fill="#a4c578" stroke="#385440" stroke-width="2.5"/><path d="M24 52 14 63M77 51 88 60" stroke="#385440" stroke-width="6" stroke-linecap="round"/><ellipse cx="39" cy="45" rx="11" ry="13" fill="#fff8df"/><ellipse cx="63" cy="45" rx="11" ry="13" fill="#fff8df"/><circle cx="42" cy="48" r="4.5" fill="#263d32"/><circle cx="60" cy="48" r="4.5" fill="#263d32"/><circle cx="43" cy="46" r="1.4" fill="white"/><circle cx="61" cy="46" r="1.4" fill="white"/><path d="M39 65q12 10 24-1" stroke="#385440" stroke-width="3.5" stroke-linecap="round"/><path d="m48 69 4 7 4-7" fill="#fff8df"/><ellipse cx="29" cy="59" rx="5" ry="3" fill="#d3a584" opacity=".7"/><ellipse cx="73" cy="59" rx="5" ry="3" fill="#d3a584" opacity=".7"/><path d="m43 30 5-4m3 3 4-4" stroke="#76994e" stroke-width="2" stroke-linecap="round"/>`),
-  hero: svg(`<ellipse cx="50" cy="88" rx="27" ry="6" fill="#263d2c" opacity=".18"/><path d="m40 72-3 13h12l2-13m9-1 4 13H53l-2-13" fill="#324943" stroke="#24392f" stroke-width="2"/><rect x="25" y="47" width="48" height="28" rx="9" fill="#98683d"/><path d="M35 50Q50 43 65 50l4 23q-19 10-38 0Z" fill="#e6ab60" stroke="#6d5237" stroke-width="2"/><path d="m34 55-7 12m40-12 7 11" stroke="#f4cc9c" stroke-width="7" stroke-linecap="round"/><rect x="34" y="25" width="32" height="31" rx="14" fill="#f4cc9c" stroke="#6d5237" stroke-width="2"/><path d="M29 33q0-23 23-23 22 2 22 23" fill="#d48242" stroke="#6d5237" stroke-width="2"/><path d="M23 32q29-6 54 1" stroke="#93603b" stroke-width="7" stroke-linecap="round"/><path d="M50 12v11" stroke="#edb46a" stroke-width="5" stroke-linecap="round"/><circle cx="43" cy="40" r="2.2" fill="#3e382a"/><circle cx="58" cy="40" r="2.2" fill="#3e382a"/><path d="m47 47 6 1" stroke="#a7714e" stroke-width="2" stroke-linecap="round"/><path d="m40 56 21 12" stroke="#825d3b" stroke-width="4"/><rect x="49" y="62" width="12" height="10" rx="2" fill="#f2d48e" stroke="#825d3b" stroke-width="2"/>`),
-  trap: svg(`<ellipse cx="50" cy="63" rx="37" ry="23" fill="#547149"/><ellipse cx="50" cy="60" rx="33" ry="22" fill="#263b31" stroke="#9bb46d" stroke-width="5"/><ellipse cx="50" cy="64" rx="23" ry="12" fill="#182d25"/><path d="m19 49 8 9m-2-17 9 9m4-14 3 9m12-10-1 10m15-5-5 10m15-2-9 9" stroke="#b9c78b" stroke-width="3" stroke-linecap="round"/><path d="M67 34V14m0 0 19 5-19 6" stroke="#724f33" stroke-width="3" stroke-linejoin="round" fill="#eaa15e"/>`),
-  rock: svg(`<ellipse cx="50" cy="80" rx="34" ry="8" fill="#263d2c" opacity=".15"/><path d="m17 68 10-29 19-11 23 9 15 31-11 12H30Z" fill="#89908a" stroke="#606c63" stroke-width="2.5" stroke-linejoin="round"/><path d="m27 39 22 10 20-12M49 49l-7 28M49 49l35 19" stroke="#727e72" stroke-width="2"/><path d="m27 39 19-11 23 9-20 12Z" fill="#a9b0a1"/><path d="m23 62 9-3 4 4m22-28 7 5 9 1" stroke="#79965d" stroke-width="5" stroke-linecap="round"/>`),
-  wall: svg(`<ellipse cx="50" cy="80" rx="34" ry="7" fill="#263d2c" opacity=".17"/><rect x="24" y="25" width="9" height="55" rx="2" fill="#865f3c" stroke="#694b32" stroke-width="2"/><rect x="67" y="25" width="9" height="55" rx="2" fill="#865f3c" stroke="#694b32" stroke-width="2"/><path d="M17 32h66v16H17zm0 25h66v16H17z" fill="#c69a61" stroke="#805c38" stroke-width="2.5" stroke-linejoin="round"/><path d="m34 38 23 2m-29 24 34 3" stroke="#a57c49" stroke-width="2" stroke-linecap="round"/><circle cx="28" cy="40" r="2" fill="#685640"/><circle cx="71" cy="40" r="2" fill="#685640"/><circle cx="28" cy="65" r="2" fill="#685640"/><circle cx="71" cy="65" r="2" fill="#685640"/>`),
-  portal: svg(`<ellipse cx="50" cy="78" rx="31" ry="8" fill="#414570" opacity=".2"/><ellipse cx="50" cy="50" rx="28" ry="35" fill="#67649a" stroke="#c4b6d2" stroke-width="6"/><ellipse cx="50" cy="50" rx="20" ry="28" fill="#343554"/><path d="M48 30c25 0 20 36 2 36-18 0-12-25 2-19" stroke="#a8badd" stroke-width="4" stroke-linecap="round"/><path d="m18 22 2-6 2 6 6 2-6 2-2 6-2-6-6-2Zm61 40 2-5 2 5 5 2-5 2-2 5-2-5-5-2Z" fill="#ddd6f1"/>`),
-  leaf: svg(`<path d="M72 16Q19 18 24 57q10 27 34 10Q78 53 72 16Z" fill="#b2ca86"/><path d="m24 82 35-48M37 60l-2-16m9 7 16-2" stroke="#34523d" stroke-width="4" stroke-linecap="round"/>`),
-};
-export function icon(name) {
-  const paths = {
-    sound: '<path d="m11 5-6 4H2v6h3l6 4V5Z"/><path d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/>',
-    muted: '<path d="m11 5-6 4H2v6h3l6 4V5Z"/><path d="m16 9 6 6m0-6-6 6"/>',
-    help: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 4 2l-1.5 1v2m0 3v.1"/>',
-    undo: '<path d="m8 4-5 5 5 5M3 9h11a6 6 0 0 1 0 12"/>',
-    reset: '<path d="M3 11a9 9 0 1 1 2 7M3 4v7h7"/>',
-    play: '<path d="m8 4 13 8-13 8V4Z"/>',
-    pause: '<path d="M8 5v14M16 5v14"/>',
-    hint: '<path d="M9 18h6m-5 3h4M8 14a7 7 0 1 1 8 0l-1 2H9l-1-2Z"/>',
-    map: '<path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2V5Zm6-2v16m6-14v16"/>',
-    lock: '<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V6a4 4 0 1 1 8 0v4m4 5v2"/>',
-    check: '<path d="m5 12 4 4L20 5"/>',
-  };
-  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name] || paths.help}</svg>`;
-}
-export function scenery() {
-  return `<div class="scene-sun"></div><div class="scene-hill hill-one"></div><div class="scene-hill hill-two"></div><div class="scene-tree tree-one"></div><div class="scene-tree tree-two"></div><div class="scene-tree tree-three"></div><div class="scene-character">${art.monster}</div><div class="scene-flower">✳</div><div class="scene-grass">⌁</div>`;
+// The production Android artwork from the original 2017 main/res bundle.
+// Files are copied byte-for-byte; no replacement sprites or generated artwork.
+const original = name => `<img src="./assets/original/${name}" alt="" draggable="false">`;
+export const art = Object.freeze({
+  monster: original('monster.png'),
+  hero: original('character.png'),
+  trap: original('pit.jpg'),
+  rock: original('stone.png'),
+  wall: original('obstacle.png'),
+  cage: original('cage.png'),
+  defeated: original('bloody_monster.png'),
+  // Portals were planned but had no original asset. Keep their representation
+  // geometric and separate from the unchanged legacy artwork.
+  portal: '<span class="portal-tile"><span>↔</span></span>',
+});
+
+export function levelTitle(id) {
+  if (id <= 8) return `<img src="./assets/original/level${id}.png" alt="" draggable="false">`;
+  // Only Level 1–8 title images exist. Reuse the word from Level 1 and add the
+  // new number in the matching red italic serif style, without stretching digits.
+  return `<span class="level-word"><img src="./assets/original/level1.png" alt="" draggable="false"></span><span class="level-digits">${id}</span>`;
 }

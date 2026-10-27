@@ -29,7 +29,9 @@ The app supports Android 8.0 (API 26) and later and needs an enabled, up-to-date
 - Non-local navigation and resource requests are blocked. File/content access and native JavaScript bridges are disabled.
 - Local progress is stored by the shared browser game in WebView local storage. Removing the app or clearing its data removes progress.
 - `appvisibility` events carry `{ hidden: true | false }` when the activity pauses or resumes. WebView rendering timers also pause in the background.
-- Android Back calls `window.gameBack()`. Return `true` when the game handles navigation; otherwise Android closes the activity.
+- Android Back calls `window.gameBack()`: it closes Help, pauses a running attempt, then navigates from game to levels to the original main menu. A further Back closes the activity.
+- The original menu's Exit button navigates to the exact local `/game/exit` path; the native host intercepts it and closes the activity without a JavaScript/native bridge.
+- The launcher restores the original `CTM` name and monster bitmap; native system bars match the original green game background.
 - The native container handles system bars and display cutouts, including edge-to-edge on Android 15/16. Rotation keeps the existing game view.
 - Debug builds allow WebView inspection; release builds disable it. Service workers are unnecessary and blocked in this host.
 

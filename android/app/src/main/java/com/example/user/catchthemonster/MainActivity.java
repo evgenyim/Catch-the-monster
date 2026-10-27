@@ -34,7 +34,7 @@ import java.util.Map;
 public final class MainActivity extends Activity {
     private static final String HOST = "appassets.androidplatform.net";
     private static final String GAME_URL = "https://" + HOST + "/game/index.html";
-    private static final int BACKGROUND = Color.rgb(35, 61, 50);
+    private static final int BACKGROUND = Color.rgb(31, 93, 3);
 
     private FrameLayout container;
     private WebView webView;
@@ -188,6 +188,13 @@ public final class MainActivity extends Activity {
     private final class LocalGameClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            // The original menu has an Exit button. Handle its exact local
+            // main-frame navigation without exposing a JavaScript/native bridge.
+            if (request.isForMainFrame() && isLocalGameUri(request.getUrl())
+                    && "/game/exit".equals(request.getUrl().getPath())) {
+                finish();
+                return true;
+            }
             // No links may open the network, files, content providers, or another application.
             return !isLocalGameUri(request.getUrl());
         }

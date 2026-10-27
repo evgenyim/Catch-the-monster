@@ -1,1 +1,20 @@
-{"id":"./","name":"Поймай монстра","short_name":"Монстр","lang":"ru","description":"Лесная головоломка с 24 уровнями","start_url":"./","scope":"./","display":"standalone","background_color":"#f7f5ed","theme_color":"#233d32","icons":[{"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}]}
+{
+  "id": "./",
+  "name": "Catch The Monster",
+  "short_name": "CTM",
+  "lang": "ru",
+  "description": "Исходные правила и графика Catch The Monster. 24 уровня.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1f5d03",
+  "theme_color": "#1f5d03",
+  "icons": [
+    {
+      "src": "./assets/original/monster.png",
+      "sizes": "640x640",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
